@@ -242,6 +242,101 @@
     .scene-strip4 { background:linear-gradient(135deg,#f0e0ff,#a060e0); }
     .scene-strip5 { background:linear-gradient(135deg,#fff0cc,#ffcc44); }
 
+
+    /* DISCLAIMER POPUP */
+    .disclaimer-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,10,30,.85);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .disclaimer-box {
+      background: var(--white);
+      border-radius: 20px;
+      max-width: 580px; width: 100%;
+      box-shadow: 0 32px 80px rgba(26,43,74,.3);
+      overflow: hidden;
+      animation: discIn .35s ease;
+    }
+    @keyframes discIn {
+      from { opacity: 0; transform: translateY(30px) scale(.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .disclaimer-header {
+      background: linear-gradient(135deg, #1A2B4A, #2a4a7a);
+      padding: 1.75rem 2rem 1.5rem;
+      text-align: center;
+    }
+    .disclaimer-header .disc-icon { font-size: 2.5rem; margin-bottom: .5rem; }
+    .disclaimer-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: white; margin-bottom: .25rem;
+    }
+    .disclaimer-header p {
+      font-size: .85rem; color: rgba(255,255,255,.65);
+    }
+    .disclaimer-body {
+      padding: 1.5rem 2rem;
+      max-height: 340px;
+      overflow-y: auto;
+    }
+    .disclaimer-body::-webkit-scrollbar { width: 4px; }
+    .disclaimer-body::-webkit-scrollbar-track { background: #f1f1f1; }
+    .disclaimer-body::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+    .disc-section { margin-bottom: 1.1rem; }
+    .disc-section h4 {
+      font-size: .82rem; font-weight: 700;
+      color: var(--navy); margin-bottom: .3rem;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .disc-section p {
+      font-size: .82rem; color: var(--gray);
+      line-height: 1.65;
+    }
+    .disc-highlight {
+      background: #EBF4FF;
+      border-left: 3px solid var(--blue);
+      border-radius: 0 8px 8px 0;
+      padding: .75rem 1rem;
+      margin: 1rem 0;
+      font-size: .82rem;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    .disclaimer-footer {
+      padding: 1.25rem 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .disc-checkbox-row {
+      display: flex; align-items: flex-start; gap: .75rem;
+      margin-bottom: 1rem; text-align: left;
+    }
+    .disc-checkbox-row input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 2px;
+      accent-color: var(--blue); flex-shrink: 0; cursor: pointer;
+    }
+    .disc-checkbox-row label {
+      font-size: .8rem; color: var(--gray); line-height: 1.5; cursor: pointer;
+    }
+    .disc-agree-btn {
+      width: 100%; padding: .9rem;
+      background: var(--blue); color: white;
+      border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: not-allowed; opacity: .5;
+      transition: background .2s, opacity .2s;
+    }
+    .disc-agree-btn.active { cursor: pointer; opacity: 1; }
+    .disc-agree-btn.active:hover { background: var(--navy); }
+    .disc-note {
+      font-size: .72rem; color: var(--gray);
+      margin-top: .75rem; line-height: 1.5;
+    }
+
   </style>
 </head>
 <body>
@@ -269,22 +364,17 @@
     </div>
   </div>
   <div class="hero-visual">
-    <div class="hero-photo-wrap">
-      <div class="hero-photo" style="width:100%;height:340px;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(26,43,74,.15);"><img src="https://picsum.photos/id/1027/800/340" alt="Happy senior couple" style="width:100%;height:100%;object-fit:cover;" /></div>
-      <div class="hero-photo-badges">
-        <div class="trust-badge">
-          <div class="icon">🏠</div>
-          <div><strong>Senior Living Placement</strong><span>Assisted living, memory care, independent communities</span></div>
-        </div>
-        <div class="trust-badge">
-          <div class="icon">🦽</div>
-          <div><strong>Mobility Equipment</strong><span>Lease or purchase — delivered to your door</span></div>
-        </div>
-        <div class="trust-badge">
-          <div class="icon">🩺</div>
-          <div><strong>Doctor & Clinic Referrals</strong><span>Vetted providers who specialize in senior care</span></div>
-        </div>
-      </div>
+    <div class="trust-badge">
+      <div class="icon">🏠</div>
+      <div><strong>Senior Living Placement</strong><span>Assisted living, memory care, independent communities</span></div>
+    </div>
+    <div class="trust-badge">
+      <div class="icon">🦽</div>
+      <div><strong>Mobility Equipment</strong><span>Lease or purchase — delivered to your door</span></div>
+    </div>
+    <div class="trust-badge">
+      <div class="icon">🩺</div>
+      <div><strong>Doctor & Clinic Referrals</strong><span>Vetted providers who specialize in senior care</span></div>
     </div>
   </div>
 </section>
@@ -298,7 +388,7 @@
 
     <div class="service-card">
       <div class="service-card-img">
-        <img src="https://picsum.photos/id/164/600/190" alt="Senior Living Facility" style="width:100%;height:190px;object-fit:cover;display:block;" />
+        <div style="width:100%;height:190px;background:linear-gradient(135deg,#fde8d8,#f08030);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;"><span style="font-size:3rem;">🏡</span><span style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.3);">Senior Living</span></div><div style="display:none" alt="Senior Living Facility" style="width:100%;height:190px;object-fit:cover;display:block;" />
         <div class="service-card-badge icon-blue">🏡 Senior Living</div>
       </div>
       <div class="service-card-body">
@@ -310,7 +400,7 @@
 
     <div class="service-card">
       <div class="service-card-img">
-        <img src="https://picsum.photos/id/1076/600/190" alt="Senior Apartment" style="width:100%;height:190px;object-fit:cover;display:block;" />
+        <div style="width:100%;height:190px;background:linear-gradient(135deg,#d0eaff,#3a80d2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;"><span style="font-size:3rem;">🏢</span><span style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.3);">Apartments</span></div><div style="display:none" alt="Senior Apartment" style="width:100%;height:190px;object-fit:cover;display:block;" />
         <div class="service-card-badge icon-sage">🏢 Apartments</div>
       </div>
       <div class="service-card-body">
@@ -322,7 +412,7 @@
 
     <div class="service-card">
       <div class="service-card-img">
-        <img src="https://picsum.photos/id/240/600/190" alt="Mobility Equipment" style="width:100%;height:190px;object-fit:cover;display:block;" />
+        <div style="width:100%;height:190px;background:linear-gradient(135deg,#d5f0e5,#2d8a5e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;"><span style="font-size:3rem;">🦽</span><span style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.3);">Equipment</span></div><div style="display:none" alt="Mobility Equipment" style="width:100%;height:190px;object-fit:cover;display:block;" />
         <div class="service-card-badge icon-gold">🦽 Equipment</div>
       </div>
       <div class="service-card-body">
@@ -334,7 +424,7 @@
 
     <div class="service-card">
       <div class="service-card-img">
-        <img src="https://picsum.photos/id/177/600/190" alt="Doctor with senior patient" style="width:100%;height:190px;object-fit:cover;display:block;" />
+        <div style="width:100%;height:190px;background:linear-gradient(135deg,#e8d8f8,#7a3db8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;"><span style="font-size:3rem;">🩺</span><span style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.3);">Doctors</span></div><div style="display:none" alt="Doctor with senior patient" style="width:100%;height:190px;object-fit:cover;display:block;" />
         <div class="service-card-badge icon-blue">🩺 Doctors</div>
       </div>
       <div class="service-card-body">
@@ -346,7 +436,7 @@
 
     <div class="service-card">
       <div class="service-card-img">
-        <img src="https://picsum.photos/id/305/600/190" alt="Medical clinic" style="width:100%;height:190px;object-fit:cover;display:block;" />
+        <div style="width:100%;height:190px;background:linear-gradient(135deg,#ffd8e8,#c0305a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;"><span style="font-size:3rem;">🏥</span><span style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.3);">Clinics</span></div><div style="display:none" alt="Medical clinic" style="width:100%;height:190px;object-fit:cover;display:block;" />
         <div class="service-card-badge icon-sage">🏥 Clinics</div>
       </div>
       <div class="service-card-body">
@@ -358,7 +448,7 @@
 
     <div class="service-card">
       <div class="service-card-img">
-        <img src="https://picsum.photos/id/338/600/190" alt="Partnership handshake" style="width:100%;height:190px;object-fit:cover;display:block;" />
+        <div style="width:100%;height:190px;background:linear-gradient(135deg,#fff3cc,#e89c00);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;"><span style="font-size:3rem;">🤝</span><span style="font-size:.8rem;font-weight:700;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.3);">Partners</span></div><div style="display:none" alt="Partnership handshake" style="width:100%;height:190px;object-fit:cover;display:block;" />
         <div class="service-card-badge icon-gold">🤝 Partners</div>
       </div>
       <div class="service-card-body">
@@ -532,7 +622,7 @@
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="how-banner">
-    <img src="https://picsum.photos/id/1037/1400/220" alt="Senior advisor with family" style="width:100%;height:220px;object-fit:cover;display:block;" />
+    <div style="width:100%;height:220px;background:linear-gradient(100deg,#1A2B4A 0%,#2a4a7a 40%,#4A90D9 100%);display:flex;flex-direction:column;justify-content:center;padding:0 2.5rem;gap:.5rem;"><div style="display:none" alt="Senior advisor with family" style="width:100%;height:220px;object-fit:cover;display:block;" />
     <div class="how-banner-overlay">
       <p class="section-label" style="color:#a8d5b5;">The Process</p>
       <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:#fff;margin:0;">Simple steps to the right fit</h2>
@@ -568,11 +658,11 @@
 
 <!-- TESTIMONIALS -->
 <div class="photo-strip">
-  <img src="https://picsum.photos/id/1072/500/200" alt="Senior woman smiling" style="width:100%;height:200px;object-fit:cover;display:block;" />
-  <img src="https://picsum.photos/id/1015/500/200" alt="Senior couple walking" style="width:100%;height:200px;object-fit:cover;display:block;" />
-  <img src="https://picsum.photos/id/91/500/200" alt="Doctor with patient" style="width:100%;height:200px;object-fit:cover;display:block;" />
-  <img src="https://picsum.photos/id/180/500/200" alt="Mobility equipment" style="width:100%;height:200px;object-fit:cover;display:block;" />
-  <img src="https://picsum.photos/id/1062/500/200" alt="Happy senior family" style="width:100%;height:200px;object-fit:cover;display:block;" />
+  <div style="height:200px;background:linear-gradient(135deg,#ffe8d0,#ffb87a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;"><span style="font-size:3rem;">👵</span><span style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.3);">Living with joy</span></div><div style="display:none" alt="Senior woman smiling" style="width:100%;height:200px;object-fit:cover;display:block;" />
+  <div style="height:200px;background:linear-gradient(135deg,#d0f0e8,#5abf94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;"><span style="font-size:3rem;">👫</span><span style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.3);">Active together</span></div><div style="display:none" alt="Senior couple walking" style="width:100%;height:200px;object-fit:cover;display:block;" />
+  <div style="height:200px;background:linear-gradient(135deg,#d8eeff,#5599e8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;"><span style="font-size:3rem;">👨‍⚕️</span><span style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.3);">Expert care</span></div><div style="display:none" alt="Doctor with patient" style="width:100%;height:200px;object-fit:cover;display:block;" />
+  <div style="height:200px;background:linear-gradient(135deg,#f0e0ff,#a060e0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;"><span style="font-size:3rem;">🛵</span><span style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.3);">Freedom to move</span></div><div style="display:none" alt="Mobility equipment" style="width:100%;height:200px;object-fit:cover;display:block;" />
+  <div style="height:200px;background:linear-gradient(135deg,#fff0cc,#ffcc44);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;"><span style="font-size:3rem;">👨‍👩‍👴</span><span style="font-size:.78rem;font-weight:600;color:rgba(255,255,255,.9);text-shadow:0 1px 3px rgba(0,0,0,.3);">Family peace of mind</span></div><div style="display:none" alt="Happy senior family" style="width:100%;height:200px;object-fit:cover;display:block;" />
 </div>
 <section class="testimonials">
   <p class="section-label">What Families Say</p>
@@ -638,7 +728,7 @@
     <div>
       <h4>Contact</h4>
       <ul>
-        <li><a href="tel:+128198703690000000">(555) 000-0000</a></li>
+        <li><a href="tel:+12819780369">(281) 978-0369</a></li>
         <li><a href="mailto:info@elevateconnectionshub.com">info@elevateconnectionshub.com</a></li>
         <li><button onclick="openModal('contact-modal')">Request a Call</button></li>
       </ul>
@@ -665,7 +755,7 @@
       <form id="contact-form" action="https://formspree.io/f/YOUR_CONTACT_FORM_ID" method="POST">
         <div class="form-row">
           <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required /></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" required /></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(281) 978-0369" required /></div>
         </div>
         <div class="form-group"><label>Email (optional)</label><input type="email" name="email" placeholder="you@email.com" /></div>
         <div class="form-group">
@@ -704,7 +794,7 @@
         <input type="hidden" name="service_type" id="service-hidden-type" />
         <div class="form-row">
           <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required /></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" required /></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(281) 978-0369" required /></div>
         </div>
         <div class="form-group"><label>Location / Zip Code</label><input type="text" name="location" placeholder="City, State or ZIP" /></div>
         <div class="form-group"><label>Notes or specific needs</label><textarea name="message" placeholder="Budget, timeline, insurance, preferences..."></textarea></div>
@@ -734,7 +824,7 @@
         </div>
         <div class="form-row">
           <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="you@yourorg.com" required /></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" required /></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(281) 978-0369" required /></div>
         </div>
         <div class="form-group">
           <label>Type of Provider</label>
@@ -776,7 +866,7 @@
         </div>
         <div class="form-row">
           <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com" required /></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" required /></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(281) 978-0369" required /></div>
         </div>
         <div class="form-group"><label>Organization (if applicable)</label><input type="text" name="organization" placeholder="Hospital, agency, or practice name" /></div>
         <div class="form-group">
@@ -954,7 +1044,7 @@
         <input type="hidden" name="equipment_type" id="equip-hidden-type" />
         <div class="form-row">
           <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required /></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" required /></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(281) 978-0369" required /></div>
         </div>
         <div class="form-group"><label>Email (optional)</label><input type="email" name="email" placeholder="you@email.com" /></div>
         <div class="form-group">
@@ -988,6 +1078,80 @@
     </div>
   </div>
 </div>
+
+
+<!-- DISCLAIMER POPUP -->
+<div class="disclaimer-overlay" id="disclaimer-overlay">
+  <div class="disclaimer-box">
+    <div class="disclaimer-header">
+      <div class="disc-icon">📋</div>
+      <h2>Important Service Disclosure</h2>
+      <p>Please read before using our services</p>
+    </div>
+    <div class="disclaimer-body">
+      <div class="disc-highlight">
+        Elevate Connections Hub Network is a <strong>free referral and placement concierge service</strong> for seniors and their families. We connect you with providers — we are not a provider ourselves.
+      </div>
+      <div class="disc-section">
+        <h4>🏢 Who We Are</h4>
+        <p>Elevate Connections Hub Network is a referral concierge and placement service based in Texas. We help seniors and families locate quality senior living facilities, healthcare providers, and mobility equipment suppliers. We are not a licensed medical provider, care facility, or insurance company.</p>
+      </div>
+      <div class="disc-section">
+        <h4>🩺 Not Medical Advice</h4>
+        <p>Nothing on this website or provided by Elevate Connections Hub Network constitutes medical, legal, or financial advice. All healthcare and placement decisions should be made in consultation with qualified licensed professionals.</p>
+      </div>
+      <div class="disc-section">
+        <h4>🤝 How We Are Compensated</h4>
+        <p>Our referral and placement services are completely free to seniors and families. Elevate Connections Hub Network receives referral compensation from facilities and providers within our network when a successful placement or service engagement occurs. This does not affect the quality standards we apply when evaluating partners.</p>
+      </div>
+      <div class="disc-section">
+        <h4>⚠️ Limitation of Liability</h4>
+        <p>Elevate Connections Hub Network makes referrals in good faith based on available information. We are not responsible for the quality, safety, or outcome of services provided by any referred facility, provider, or equipment supplier. We strongly encourage all families to independently verify and evaluate any provider before making a final decision.</p>
+      </div>
+      <div class="disc-section">
+        <h4>🔒 Your Privacy</h4>
+        <p>Information you share with us is used solely to connect you with appropriate care resources. We do not sell your personal information to third parties.</p>
+      </div>
+    </div>
+    <div class="disclaimer-footer">
+      <div class="disc-checkbox-row">
+        <input type="checkbox" id="disc-check" onchange="toggleDisclaimerBtn()" />
+        <label for="disc-check">I understand that Elevate Connections Hub Network is a referral concierge service, not a medical provider or care facility, and that I should independently verify any referred provider before making decisions.</label>
+      </div>
+      <button class="disc-agree-btn" id="disc-agree-btn" onclick="closeDisclaimer()" disabled>
+        I Understand — Continue to Site
+      </button>
+      <p class="disc-note">By continuing you acknowledge you have read and understood this service disclosure. This disclosure is for informational purposes and does not constitute a legal contract.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Disclaimer logic
+  function toggleDisclaimerBtn() {
+    const cb = document.getElementById('disc-check');
+    const btn = document.getElementById('disc-agree-btn');
+    if (cb.checked) {
+      btn.disabled = false;
+      btn.classList.add('active');
+    } else {
+      btn.disabled = true;
+      btn.classList.remove('active');
+    }
+  }
+  function closeDisclaimer() {
+    const overlay = document.getElementById('disclaimer-overlay');
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity .3s ease';
+    setTimeout(() => { overlay.style.display = 'none'; }, 300);
+    // Remember for this session
+    sessionStorage.setItem('disclaimerAccepted', 'true');
+  }
+  // Don't show again if already accepted this session
+  if (sessionStorage.getItem('disclaimerAccepted') === 'true') {
+    document.getElementById('disclaimer-overlay').style.display = 'none';
+  }
+</script>
 
 </body>
 </html>
